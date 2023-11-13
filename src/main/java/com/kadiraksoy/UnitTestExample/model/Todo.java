@@ -3,6 +3,7 @@ package com.kadiraksoy.UnitTestExample.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,22 +15,23 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Table(name = "todos", schema = "workshop")
+@Table(name = "todos")
 @NoArgsConstructor
 @AllArgsConstructor
 public class Todo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
-    @ManyToMany
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
     @Column(nullable = false)
+    @Size(min = 2, max = 200)
     private String description;
 
     @Column(nullable = false)
